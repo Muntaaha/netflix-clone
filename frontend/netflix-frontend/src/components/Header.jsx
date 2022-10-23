@@ -1,10 +1,10 @@
 import React from 'react'
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import logo from "../assets/logo.png";
+import logo from "../assets/images/logo.png";
 
 const Header = (props) => {
-    constnavigate = useNavigate()
+    const navigate = useNavigate()
     return (
         <StyledHeader className="flex a-center j-between">
             <div className="logo">
@@ -17,7 +17,7 @@ const Header = (props) => {
     )
 }
 
-const StyleHeader = styled.header`
+const StyledHeader = styled.header`
     padding: 0 4rem;
     .logo{
         img{
