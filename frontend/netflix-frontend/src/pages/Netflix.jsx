@@ -14,6 +14,8 @@ const Netflix = () => {
     
     const [isScrolled, setIsScrolled] = useState(false);
 
+    const navigate = useNavigate();
+
     window.onscroll = () => {
         setIsScrolled(window.pageYOffset === 0 ? false : true);
         return () => (window.onscroll = null);
@@ -33,7 +35,10 @@ const Netflix = () => {
                         <img src={MovieLogo} alt="MovieLogo" />
                     </div>
                     <div className="buttons flex">
-                        <button className="flex j-center a-center">
+                        <button 
+                            onClick={() => navigate("/player")}
+                            className="flex j-center a-center"
+                        >
                             <FaPlay /> Play
                         </button>
                         <button className="flex j-center a-center">

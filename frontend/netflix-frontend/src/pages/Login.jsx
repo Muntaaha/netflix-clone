@@ -43,7 +43,7 @@ const Login = () => {
                             <input 
                                 type="password"
                                 placeholder="Password"
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setPassword(e.target.value)}
                                 value={password}
                             />
                             <button onClick={handleLogin}>Login to your account</button>
