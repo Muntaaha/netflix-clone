@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_KEY, TMDB_BASE_URL } from "../utils/constants";
+import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
 import { netflixSlice } from "./netflixSlice";
 
 const getGenres = async () => {

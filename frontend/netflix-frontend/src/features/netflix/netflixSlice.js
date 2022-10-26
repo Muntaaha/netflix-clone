@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@redux/tolkit"
-import netflixService from "../netflix/netflixService"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import netflixService from "./netflixService"
 
 const initialState = {
     genres: [],

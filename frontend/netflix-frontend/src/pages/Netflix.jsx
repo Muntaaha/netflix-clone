@@ -3,9 +3,10 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import backgroundImage from "../assets/images/home.jpg";
 import MovieLogo from "../assets/images/homeTitle.webp";
-
+import { useSelector, useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
+import { getGenres } from "../features/netflix/netflixSlice";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -15,6 +16,19 @@ const Netflix = () => {
     const [isScrolled, setIsScrolled] = useState(false);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { genres, isSuccess, isError, message } = useSelector(
+      (state) => state.netflix
+    )
+
+    useEffect(() => {
+      dispatch(getGenres());
+
+      if(isSuccess){
+        console.log(genres)
+      }
+    },[genres, isSuccess, dispatch])
 
     window.onscroll = () => {
         setIsScrolled(window.pageYOffset === 0 ? false : true);
