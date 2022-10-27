@@ -10,6 +10,7 @@ import { getGenres, trendingMovies } from "../features/netflix/netflixSlice";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import Slider from "../components/Slider";
 
 const Netflix = () => {
     
@@ -63,6 +64,7 @@ const Netflix = () => {
                     </div>
                 </div>
             </div>
+            <Slider movies = {movies}/>
         </Container>
     )
 }
