@@ -6,7 +6,7 @@ import MovieLogo from "../assets/images/homeTitle.webp";
 import { useSelector, useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
-import { getGenres } from "../features/netflix/netflixSlice";
+import { getGenres, trendingMovies } from "../features/netflix/netflixSlice";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -18,17 +18,19 @@ const Netflix = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { genres, isSuccess, isError, message } = useSelector(
+    const { genres, movies, isSuccess, isError, message } = useSelector(
       (state) => state.netflix
     )
 
     useEffect(() => {
       dispatch(getGenres());
+      dispatch(trendingMovies());
 
       if(isSuccess){
-        console.log(genres)
+        // console.log(genres)
+        // console.log(movies)
       }
-    },[genres, isSuccess, dispatch])
+    },[genres, movies, isSuccess, dispatch])
 
     window.onscroll = () => {
         setIsScrolled(window.pageYOffset === 0 ? false : true);
