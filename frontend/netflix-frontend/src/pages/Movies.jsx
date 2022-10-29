@@ -13,8 +13,7 @@ import NotAvailable from "../components/NotAvailable";
 
 const Movies = () => {
     const [isScrolled, setIsScrolled] = useState(false)
-    const {genres, isLoading} = useSelector((state) => state.netflix)
-    const movies_by_genre = useSelector((state) => state.netflix)
+    const {genres, movies, isSuccess, isLoading, isError, message} = useSelector((state) => state.netflix)
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,11 +26,9 @@ const Movies = () => {
         if(isLoading){
             dispatch(fetchByGenre({ genres, type: "movie" }));
         }
-    }, [movies_by_genre, isLoading])
+    }, [movies, isLoading])
     
-    if(isLoading){
-        return <NotAvailable />
-    }
+
     return (
         <Container>
             <div className="navbar">
@@ -39,7 +36,7 @@ const Movies = () => {
             </div>
             <div className="data">
                 <SelectGenre genres={genres} type="movie" />
-                {movies_by_genre.length ? <Slider movies_by_genre={movies_by_genre} /> : <NotAvailable />}
+                {movies?.length ? <Slider movies={movies} /> : <NotAvailable />}
             </div>
         </Container>
     )

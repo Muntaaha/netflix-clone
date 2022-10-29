@@ -17,13 +17,15 @@ const createArrayFromFetchedMovies = (array, moviesArray, genres) => {
     array.forEach((movie) => {
         let movieGenres = [];
         movie.genre_ids.forEach((genre) => {
+                // console.log(genre)
                 const name = genres.find(({ id }) => id === parseInt(genre));
+                // console.log('Printing Name')
                 // console.log(name)
                 if (name){
                     movieGenres.push(name.name)
             }
         });
-        console.log(movieGenres);
+        // console.log(movieGenres);
         if(movie.backdrop_path){
             moviesArray.push({
                 id: movie.id,
@@ -43,6 +45,7 @@ const createArrayFromFetchedMovies = (array, moviesArray, genres) => {
 
 const getMovieData = async (api_url, genres, paging = false) => {
     let moviesArray = [];
+
     for (let i = 1; moviesArray.length < 60 && i < 10; i++){
         const {data: {results},} = await axios.get(`${api_url}${paging ? `&page=${i}` : ""}`);
         createArrayFromFetchedMovies(results, moviesArray, genres);
@@ -52,7 +55,6 @@ const getMovieData = async (api_url, genres, paging = false) => {
 }
 
 const fetchByGenre = async (type, genre, genres) => {
-    // console.log(genre);
     return getMovieData(
         `${TMDB_BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`, 
         genres

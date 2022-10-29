@@ -1,10 +1,11 @@
 import React from 'react'
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { fetchByGenre, getGenres } from "../features/netflix/netflixSlice"
+import { fetchByGenre } from "../features/netflix/netflixSlice"
 
 const SelectGenre = ({ genres, type }) => {
     const dispatch = useDispatch()
+    // console.log(genres)
     return (
         <Select
             className="flex"
