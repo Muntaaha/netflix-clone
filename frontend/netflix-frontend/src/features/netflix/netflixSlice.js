@@ -4,6 +4,7 @@ import netflixService from "./netflixService"
 const initialState = {
     genres: [],
     movies: [],
+    movies_by_genre: [],
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -43,6 +44,20 @@ export const trendingMovies = createAsyncThunk(
     }
 )
 
+export const fetchByGenre = createAsyncThunk(
+    'netflix/fetchByGenre',
+    async ({type, genre}, thunkAPI) => {
+        try {
+            const { netflix: {genres}, } = thunkAPI.getState()
+            return await netflixService.fetchByGenre(type, genre, {genres})
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) ||
+                            error.message || error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 
 export const netflixSlice = createSlice({
     name: 'netflix',
@@ -71,6 +86,16 @@ export const netflixSlice = createSlice({
                 state.movies = action.payload
             })
             .addCase(trendingMovies.rejected, (state, action) => {
+                state.isLoading = false 
+                state.isError = true 
+                state.message = action.payload
+            })
+            .addCase(fetchByGenre.fulfilled, (state, action) => {
+                state.isLoading = false 
+                state.isSuccess = true 
+                state.movies_by_genre = action.payload
+            })
+            .addCase(fetchByGenre.rejected, (state, action) => {
                 state.isLoading = false 
                 state.isError = true 
                 state.message = action.payload
