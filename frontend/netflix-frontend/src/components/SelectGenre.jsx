@@ -18,7 +18,7 @@ const SelectGenre = ({ genres, type }) => {
                 );
             }}
             >
-            {genres.map((genre) => {
+            {genres?.map((genre) => {
                 return (
                 <option value={genre.id} key={genre.id}>
                     {genre.name}

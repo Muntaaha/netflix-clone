@@ -4,27 +4,26 @@ import { netflixSlice } from "./netflixSlice";
 
 const getGenres = async () => {
     const response = await axios.get(`${TMDB_BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
-    return response.data
+    return response.data.genres
 }
 // Get Movies Trending/GenreWise
 
 const createArrayFromFetchedMovies = (array, moviesArray, genres) => {
-    // try {
+    try {
     // if(array){
     //     console.log(array);
     // }
+    // console.log(genres)
     array.forEach((movie) => {
-        const movieGenres = [];
+        let movieGenres = [];
         movie.genre_ids.forEach((genre) => {
-            console.log("genre1")
-                const name = genres.find(({ id }) => id === genre);
-                console.log(name)
-                console.log("genre2")
+                const name = genres.find(({ id }) => id === parseInt(genre));
+                // console.log(name)
                 if (name){
-                    console.log("genre3")
                     movieGenres.push(name.name)
             }
         });
+        console.log(movieGenres);
         if(movie.backdrop_path){
             moviesArray.push({
                 id: movie.id,
@@ -36,14 +35,14 @@ const createArrayFromFetchedMovies = (array, moviesArray, genres) => {
         }
     });
         
-    // } catch (error) {
-    //     console.log("Didn't find any data")
-    // };
+    } catch (error) {
+        console.log(error.message)
+    };
 };
 
 
 const getMovieData = async (api_url, genres, paging = false) => {
-    const moviesArray = [];
+    let moviesArray = [];
     for (let i = 1; moviesArray.length < 60 && i < 10; i++){
         const {data: {results},} = await axios.get(`${api_url}${paging ? `&page=${i}` : ""}`);
         createArrayFromFetchedMovies(results, moviesArray, genres);

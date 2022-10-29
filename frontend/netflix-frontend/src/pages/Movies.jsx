@@ -13,26 +13,24 @@ import NotAvailable from "../components/NotAvailable";
 
 const Movies = () => {
     const [isScrolled, setIsScrolled] = useState(false)
-    const {genres, isLoading} = useSelector((state) => state.netflix.genres)
-    const movies_by_genre = useSelector((state) => state.netflix.movies_by_genre)
+    const {genres, isLoading} = useSelector((state) => state.netflix)
+    const movies_by_genre = useSelector((state) => state.netflix)
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getGenres());
-        console.log(genres)
     },[]);
 
     useEffect(() => {
         if(isLoading){
             dispatch(fetchByGenre({ genres, type: "movie" }));
-            console.log(movies_by_genre)
         }
     }, [movies_by_genre, isLoading])
     
     if(isLoading){
-        <NotAvailable />
+        return <NotAvailable />
     }
     return (
         <Container>

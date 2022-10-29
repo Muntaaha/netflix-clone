@@ -46,10 +46,12 @@ export const trendingMovies = createAsyncThunk(
 
 export const fetchByGenre = createAsyncThunk(
     'netflix/fetchByGenre',
-    async ({type, genre}, thunkAPI) => {
+    async ({genres, type, genre}, thunkAPI) => {
         try {
-            const { netflix: {genres}, } = thunkAPI.getState()
-            return await netflixService.fetchByGenre(type, genre, {genres})
+            // const x = thunkAPI.getState()
+            // const genres = x.netflix.genres
+            console.log(genres)
+            return await netflixService.fetchByGenre(type, genre, genres)
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) ||
                             error.message || error.toString()
