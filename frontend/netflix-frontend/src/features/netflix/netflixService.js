@@ -6,6 +6,8 @@ const getGenres = async () => {
     const response = await axios.get(`${TMDB_BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
     return response.data.genres
 }
+
+
 // Get Movies Trending/GenreWise
 
 const createArrayFromFetchedMovies = (array, moviesArray, genres) => {
@@ -63,10 +65,16 @@ const trendingMovies = async (genres) => {
     )
 }
 
+const getWishlist = async (email) => {
+    const response = await axios.get(`http://localhost:5000/api/wishlist/getWishlist/${email}`);
+    return response.data.movies
+}
+
 const netflixService = {
     getGenres,
     trendingMovies,
     fetchByGenre,
+    getWishlist,
 }
 
 export default netflixService

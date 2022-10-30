@@ -23,7 +23,7 @@ const Movies = () => {
     }, []);
 
     useEffect(() => {
-        if(isLoading){
+        if(!isLoading){
             dispatch(fetchByGenre({ genres, type: "movie" }));
         }
     }, [movies, isLoading])

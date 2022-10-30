@@ -3,6 +3,7 @@ import netflixService from "./netflixService"
 
 const initialState = {
     genres: [],
+    wishlist: [],
     movies: [],
     isLoading: false,
     isSuccess: false,
@@ -47,15 +48,27 @@ export const fetchByGenre = createAsyncThunk(
     'netflix/fetchByGenre',
     async ({genres, type, genre}, thunkAPI) => {
         try {
-            // const x = thunkAPI.getState()
-            // const genres = x.netflix.genres
-            // console.log(genres)
-            // console.log(type)
-            // console.log(genre)
             return await netflixService.fetchByGenre(type, genre, genres)
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) ||
                             error.message || error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+// Get User Wishlist
+export const getWishlist = createAsyncThunk(
+    'netflix/getWishlist',
+    async (email, thunkAPI) => {
+        try {
+            return await netflixService.getWishlist(email)
+        } catch (error) {
+            const message = 
+                (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+                error.message || error.toString()
             return thunkAPI.rejectWithValue(message)
         }
     }
@@ -99,6 +112,16 @@ export const netflixSlice = createSlice({
                 state.movies = action.payload
             })
             .addCase(fetchByGenre.rejected, (state, action) => {
+                state.isLoading = false 
+                state.isError = true 
+                state.message = action.payload
+            })
+            .addCase(getWishlist.fulfilled, (state, action) => {
+                state.isLoading = false 
+                state.isSuccess = true 
+                state.wishlist = action.payload
+            })
+            .addCase(getWishlist.rejected, (state, action) => {
                 state.isLoading = false 
                 state.isError = true 
                 state.message = action.payload

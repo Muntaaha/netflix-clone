@@ -26,7 +26,7 @@ const Card = ({ index, movieData, isLiked = false }) => {
 
   const addToList = async () => {
     try {
-      await axios.post("http://localhost:5000/api/addMoviesToWishlist", {
+      await axios.post("http://localhost:5000/api/wishlist/addMoviesToWishlist", {
         email,
         data: movieData,
       });
