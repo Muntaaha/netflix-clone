@@ -63,7 +63,7 @@ const fetchByGenre = async (type, genre, genres) => {
 
 const trendingMovies = async (genres) => {
     return getMovieData(
-        `${TMDB_BASE_URL}/trending/movie/week?api_key=${API_KEY}`,
+        `${TMDB_BASE_URL}/trending/all/week?api_key=${API_KEY}`,
         genres,
         true
     )
