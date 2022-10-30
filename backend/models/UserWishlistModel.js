@@ -7,7 +7,7 @@ const userWishlistSchema = new mongoose.Schema({
         unique: true,
         max: 50,
     },
-    wishlistedMovies = Array,
+    wishlistedMovies: Array,
 });
 
 module.exports = mongoose.model("user_wishlist", userWishlistSchema); 

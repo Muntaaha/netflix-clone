@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
+import axios from 'axios'
 import video from "../assets/videos/video.mp4"
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
+import { onAuthStateChanged } from "firebase/auth";
+import { firebaseAuth } from "../utils/firebase-config";
 import { IoPlayCircleSharp } from "react-icons/io5";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiThumbUpFill, RiThumbDownFill, RiThumbDownLine } from "react-icons/ri";
@@ -15,6 +18,22 @@ const Card = ({ index, movieData, isLiked = false }) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const [email, setEmail] = useState(undefined)
 
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) {
+      setEmail(currentUser.email);
+    } else navigate("/login");
+  });
+
+  const addToList = async () => {
+    try {
+      await axios.post("http://localhost:5000/api/addMoviesToWishlist", {
+        email,
+        data: movieData,
+      });
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  };
 	return (
 		<Container
 			onMouseEnter={() => setIsHovered(true)}
@@ -53,7 +72,8 @@ const Card = ({ index, movieData, isLiked = false }) => {
 									<BsCheck title = "Remove from List"
 										onClick={()=>{}} />
 								) : (
-									<AiOutlinePlus title="Add to my list" onClick={()=>{}} />
+									<AiOutlinePlus title="Add to my list" onClick={addToList} />
+									// <AiOutlinePlus title="Add to my list" />
 								)}
 							</div>
 							<div className="info">

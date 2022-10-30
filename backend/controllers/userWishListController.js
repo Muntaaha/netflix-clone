@@ -14,21 +14,22 @@ module.exports.addToWishlist = asyncHandler(async (req, res) => {
             const { wishlistedMovies } = user;
             const alreadyInWishlist = wishlistedMovies.find(({id}) => id === data.id);
             if (!alreadyInWishlist) {
-                await UserWishlist.findByIdAndUpdate(
+                const movieData = await UserWishlist.findByIdAndUpdate(
                     user._id,
                     {
                         wishlistedMovies: [...user.wishlistedMovies, data],
                     },
                     { new: true }
                 );
+                return res.status(200).json(movieData)
             }
             else{
                 return res.status(401).json({msg: "Movie already in list"})
             }
         }
         else{
-            await UserWishlist.create({email, wishlistedMovies: [data] });
-            return res.status(200).json({msg: "Movie added to the list"})
+            const movieData = await UserWishlist.create({email, wishlistedMovies: [data] });
+            return res.status(200).json(movieData)
         }
     } catch (error) {
         return res.status(401).json({msg: "Error adding to the list"})

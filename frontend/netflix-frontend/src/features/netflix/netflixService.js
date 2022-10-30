@@ -13,19 +13,14 @@ const createArrayFromFetchedMovies = (array, moviesArray, genres) => {
     // if(array){
     //     console.log(array);
     // }
-    // console.log(genres)
     array.forEach((movie) => {
         let movieGenres = [];
         movie.genre_ids.forEach((genre) => {
-                // console.log(genre)
                 const name = genres.find(({ id }) => id === parseInt(genre));
-                // console.log('Printing Name')
-                // console.log(name)
                 if (name){
                     movieGenres.push(name.name)
             }
         });
-        // console.log(movieGenres);
         if(movie.backdrop_path){
             moviesArray.push({
                 id: movie.id,
@@ -50,7 +45,6 @@ const getMovieData = async (api_url, genres, paging = false) => {
         const {data: {results},} = await axios.get(`${api_url}${paging ? `&page=${i}` : ""}`);
         createArrayFromFetchedMovies(results, moviesArray, genres);
     }
-    console.log(moviesArray);
     return moviesArray;
 }
 

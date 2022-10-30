@@ -15,7 +15,7 @@ app.use(express.json())
 
 app.use(express.urlencoded({ extended: false }))
 
-// app.use('/api/something', require('./routes/something'))
+app.use('/api/addMoviesToWishlist', require('./routes/addMoviesToWishlist'))
 
 app.use(errorHandler)
 

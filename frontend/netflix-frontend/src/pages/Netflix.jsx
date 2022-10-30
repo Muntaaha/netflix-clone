@@ -25,13 +25,11 @@ const Netflix = () => {
 
     useEffect(() => {
       dispatch(getGenres());
-      dispatch(trendingMovies());
+    },[genres])
 
-      if(isSuccess){
-        // console.log(genres)
-        // console.log(movies)
-      }
-    },[genres, movies, isSuccess, dispatch])
+    useEffect(() => {
+      dispatch(trendingMovies());
+    }, [])
 
     window.onscroll = () => {
         setIsScrolled(window.pageYOffset === 0 ? false : true);
