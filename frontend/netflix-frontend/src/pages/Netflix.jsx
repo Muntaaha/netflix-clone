@@ -6,7 +6,7 @@ import MovieLogo from "../assets/images/homeTitle.webp";
 import { useSelector, useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
-import { getGenres, trendingMovies } from "../features/netflix/netflixSlice";
+import { getGenres, trendingMovies, getWishlist } from "../features/netflix/netflixSlice";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -18,14 +18,25 @@ const Netflix = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const { genres, movies, isSuccess, isError, message } = useSelector(
+    const [email, setEmail] = useState(undefined);
+    const { genres, wishlist, movies, isSuccess, isError, message } = useSelector(
       (state) => state.netflix
     )
 
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) {
+          setEmail(currentUser.email);
+      }
+      else {navigate("/login");
+      }
+    });
+
     useEffect(() => {
       dispatch(getGenres());
-    },[genres])
+      if(email){
+        dispatch(getWishlist(email));
+      }
+    },[genres, wishlist, email])
 
     useEffect(() => {
       dispatch(trendingMovies());
@@ -62,7 +73,7 @@ const Netflix = () => {
                     </div>
                 </div>
             </div>
-            <Slider movies = {movies}/>
+            <Slider movies = {movies} wishlist={wishlist}/>
         </Container>
     )
 }

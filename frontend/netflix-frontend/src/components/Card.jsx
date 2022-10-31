@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import video from "../assets/videos/video.mp4"
 import { useNavigate } from "react-router-dom";
@@ -6,17 +6,19 @@ import styled from "styled-components"
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { IoPlayCircleSharp } from "react-icons/io5";
-import { AiOutlinePlus } from "react-icons/ai";
-import { RiThumbUpFill, RiThumbDownFill, RiThumbDownLine } from "react-icons/ri";
+import { AiOutlinePlus, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
-import { useDispatch } from 'react-redux'
+import { getWishlist } from "../features/netflix/netflixSlice";
+import { useDispatch, useSelector } from 'react-redux'
 
 const Card = ({ index, movieData, isLiked = false }) => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [isHovered, setIsHovered] = useState(false)
 	const [email, setEmail] = useState(undefined)
+	const [errorMessage, setErrorMessage] = useState('')
+  const {wishlist, isSuccess} = useSelector((state) => state.netflix);
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) {
@@ -26,12 +28,15 @@ const Card = ({ index, movieData, isLiked = false }) => {
 
   const addToList = async () => {
     try {
+      console.log(email)
+      console.log(movieData)
       await axios.post("http://localhost:5000/api/wishlist/addMoviesToWishlist", {
         email,
         data: movieData,
       });
     } catch (error) {
-      console.log(error.response.data.msg);
+      console.log(error.response.data.msg)
+      setErrorMessage(error.response.data.msg);
     }
   };
 	return (
@@ -66,14 +71,11 @@ const Card = ({ index, movieData, isLiked = false }) => {
 						<div className="icons flex j-between">
 							<div className="controls flex">
 								<IoPlayCircleSharp title="Play" onClick={() => navigate("/player")} />
-								<RiThumbUpFill title="Like" />
-								<RiThumbDownFill title="Dislike" />
 								{isLiked ? (
-									<BsCheck title = "Remove from List"
+									<AiFillHeart title = "Remove from List"
 										onClick={()=>{}} />
 								) : (
-									<AiOutlinePlus title="Add to my list" onClick={addToList} />
-									// <AiOutlinePlus title="Add to my list" />
+									<AiOutlineHeart title="Add to my list" onClick={addToList} />
 								)}
 							</div>
 							<div className="info">

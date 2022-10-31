@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Card from "./Card";
 
-const CardSlider = ({data, title}) => {
+const CardSlider = ({data, title, wishlist}) => {
     const listRef = useRef()
     const [sliderPosition, setSliderPosition] = useState(0)
+    
     const [showControls, setShowControls] = useState(false)
     
     const handleDirection = (direction) => {
@@ -35,8 +36,14 @@ const CardSlider = ({data, title}) => {
                 </div>
                 <div className="slider flex" ref={listRef}>
                     {data.map((movie, index) =>{
-                        return <Card movieData={movie} index={index} key={movie.id} />
-                    })}
+                        // const check = wishlist.find(({ id }) => id === movie.id);
+                        // if(check) {
+                        //   return <Card movieData={movie} index={index} key={movie.id} isLiked={true}/>
+                        // }
+                        // else{
+                          return <Card movieData={movie} index={index} key={movie.id} isLiked={false}/>
+                        // }
+                        })}
                 </div>
                 <div className={`slider-action right ${
                     !showControls ? "none" : ""
