@@ -73,7 +73,11 @@ const Card = ({ index, movieData, isLiked = false }) => {
 								<IoPlayCircleSharp title="Play" onClick={() => navigate("/player")} />
 								{isLiked ? (
 									<AiFillHeart title = "Remove from List"
-										onClick={()=>{}} />
+                  onClick={() =>
+                    dispatch(
+                      removeMovieFromWishlist({ movieId: movieData.id, email })
+                    ) }
+                  />
 								) : (
 									<AiOutlineHeart title="Add to my list" onClick={addToList} />
 								)}

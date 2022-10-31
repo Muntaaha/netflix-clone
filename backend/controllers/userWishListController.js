@@ -54,3 +54,35 @@ module.exports.getWishlist = asyncHandler(async (req, res) => {
         return res.json({ msg: "Error Fetching" });
     }
 });
+
+//@desc Remove Movies from Wishlist
+//@route POST 
+//@access Private
+
+module.exports.removeFromWishlist = async (req, res) => {
+    try {
+        const {email, MovieID} =req.body 
+        const user = await UserWishlist.findOne({email});
+        if (user) {
+            const movies = user.wishlistedMovies;
+            const movieIndex = movies.findIndex(({id}) => id === movieId);
+            if(!movieIndex){
+                res.status(400).send({msg:"Movie not found"})
+            }
+            movies.splice(movieIndex, 1);
+            await UserWishlist.findByIdAndUpdate(
+                user._id,
+                {
+                    wishlistedMovies: movies,
+                },
+                {new: true}
+            );
+            return res.json({msg: "Movie Successful", movies})
+        }
+        else{
+            return res.json({msg: "User not found"})
+        }
+    } catch (error) {
+        return res.json({msg: "error removing movie from the wishlist"})
+    }
+}
