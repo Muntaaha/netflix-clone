@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_KEY, TMDB_BASE_URL } from "../../utils/constants";
-import { netflixSlice } from "./netflixSlice";
+// import { netflixSlice } from "./netflixSlice";
 
 const getGenres = async () => {
     const response = await axios.get(`${TMDB_BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
@@ -71,10 +71,13 @@ const getWishlist = async (email) => {
 }
 
 const removeMovieFromWishlist = async (movieId, email) => {
+    console.log(movieId)
+    console.log(email)
     const response = await axios.put("http://localhost:5000/api/wishlist/removeFromwishlist", {
         email,
         movieId,
       });
+    console.log(response)
     return response.data.movies
 }
 

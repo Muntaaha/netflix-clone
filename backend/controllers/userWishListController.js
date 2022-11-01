@@ -61,8 +61,10 @@ module.exports.getWishlist = asyncHandler(async (req, res) => {
 
 module.exports.removeFromWishlist = async (req, res) => {
     try {
-        const {email, MovieID} =req.body 
+        const {movieId, email} =req.body
         const user = await UserWishlist.findOne({email});
+        // console.log(email)
+        console.log(movieId)
         if (user) {
             const movies = user.wishlistedMovies;
             const movieIndex = movies.findIndex(({id}) => id === movieId);
