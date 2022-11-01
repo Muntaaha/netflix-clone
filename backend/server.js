@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production'){
 
     app.get('*', (req,res) => 
         res.sendFile(
-            path.resolve(__dirrname, '../', 'frontend/netflix-frontend', 'build', 'index.html')
+            path.resolve(__dirname, '../', 'frontend/netflix-frontend', 'build', 'index.html')
         )
     );
 }
