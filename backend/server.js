@@ -20,7 +20,7 @@ app.use('/api/wishlist', require('./routes/userWishlistRoutes'))
 //Server upload
 
 if (process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, '../frontend/build')));
+    app.use(express.static(path.join(__dirname, '../frontend/netflix-frontend/build')));
 
     app.get('*', (req,res) => 
         res.sendFile(
