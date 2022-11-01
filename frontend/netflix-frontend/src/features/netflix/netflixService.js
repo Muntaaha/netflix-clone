@@ -70,11 +70,20 @@ const getWishlist = async (email) => {
     return response.data.movies
 }
 
+const removeMovieFromWishlist = async (movieId, email) => {
+    const response = await axios.put("http://localhost:5000/api/wishlist/removeFromwishlist", {
+        email,
+        movieId,
+      });
+    return response.data.movies
+}
+
 const netflixService = {
     getGenres,
     trendingMovies,
     fetchByGenre,
     getWishlist,
+    removeMovieFromWishlist,
 }
 
 export default netflixService

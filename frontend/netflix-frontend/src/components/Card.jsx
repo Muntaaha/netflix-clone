@@ -9,7 +9,7 @@ import { IoPlayCircleSharp } from "react-icons/io5";
 import { AiOutlinePlus, AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
-import { getWishlist } from "../features/netflix/netflixSlice";
+import { getWishlist, removeMovieFromWishlist } from "../features/netflix/netflixSlice";
 import { useDispatch, useSelector } from 'react-redux'
 
 const Card = ({ index, movieData, isLiked = false }) => {

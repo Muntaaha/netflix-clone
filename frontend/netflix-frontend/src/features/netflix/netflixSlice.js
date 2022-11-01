@@ -74,6 +74,23 @@ export const getWishlist = createAsyncThunk(
     }
 )
 
+// Remove from wishlist
+
+export const removeMovieFromWishlist = createAsyncThunk(
+    'netflix/removeMovieFromWishlist',
+    async ({ movieId, email }, thunkAPI) => {
+        try {
+            return await netflixService.removeMovieFromWishlist(email, movieId)
+        } catch (error) {
+            const message = 
+                (error.response && 
+                error.response.data &&
+                error.response.data.message) || 
+                error.message || error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
 
 export const netflixSlice = createSlice({
     name: 'netflix',
